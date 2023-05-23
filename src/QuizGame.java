@@ -4,4 +4,5 @@ public class QuizGame {
     public QuizGame(){
         wordList=new ArrayList<Quiz>();
     }
+
 }
