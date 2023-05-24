@@ -9,6 +9,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private JLabel label1;
     private JTextField QuestionField;
     private JTextField answerField;
+    private JButton StartButton;
     private QuizGame game;
 
     public MainGUI(QuizGame gameRef){
@@ -18,7 +19,8 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     public void setupListeners(){
-        submitAnswerButton.addActionListener(this);
+        StartButton.addActionListener(this);
+        submitAnswerButton.addActionListener(this); //need to add action listener for submit answer button
     }
 
     public void createUIComponents(){
@@ -31,7 +33,7 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        QuestionField.setText("hello");
+        QuestionField.setText(game.sendWord());
     }
 
     public void keyTyped(KeyEvent e){}
