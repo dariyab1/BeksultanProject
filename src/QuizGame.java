@@ -6,6 +6,7 @@ public class QuizGame {
     public QuizGame(){
         wordList=new ArrayList<Quiz>();
         wordList.add(new Quiz("hola", "hello"));
+        wordList.add(new Quiz("sombrero", "hat"));
         q=null;
         gameWindow=new MainGUI(this);
     }
@@ -14,7 +15,32 @@ public class QuizGame {
         return q.getWord();
     }
     public void play(){
-        System.out.println("play");
+        if(wordList != null && wordList.size()>0){
+            q=wordList.get(0);
+        }
+    }
+    public String correctAnswer(){
+        return wordList.get(0).getAnswer();
+    }
+
+    public boolean processGuess(String guess){
+        if(guess.equals(correctAnswer())){
+            wordList.remove(0);
+            if(wordList.size()>0){
+                q=wordList.get(0);
+            }
+            else{
+                q=new Quiz("","");
+            }
+            return true;
+        }
+        else{
+            return false;
+        }
+
+    }
+    public int getWordListSize(){
+        return wordList.size();
     }
 
 }

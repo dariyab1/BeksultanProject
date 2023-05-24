@@ -1,16 +1,18 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
+
+import static java.awt.Color.*;
 
 public class MainGUI extends JFrame implements ActionListener {
     private JPanel MyJPanel;
     private JButton submitAnswerButton;
     private JLabel label1;
-    private JTextField QuestionField;
     private JTextField answerField;
     private JButton StartButton;
+    private JTextArea QuestionArea;
     private QuizGame game;
+
 
     public MainGUI(QuizGame gameRef){
         game=gameRef;
@@ -33,14 +35,41 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent e){
-        QuestionField.setText(game.sendWord());
+        Object source=e.getSource();
+        JButton clickedButton=(JButton) source;
+        String buttonText= clickedButton.getText();
+        if(buttonText.equals("START")){
+            game.play();
+            QuestionArea.append(game.sendWord());
+            StartButton.setVisible(false);
+        }
+        else if(buttonText.equals("Submit answer")){
+            game.processGuess(buttonText);
+            updateScreen();
+        }
+
     }
 
-    public void keyTyped(KeyEvent e){}
 
-    public void keyPressed(KeyEvent e){}
+    private void updateScreen(){
+        String currentGuess = answerField.getText();
+        QuestionArea.append("\nYou have guessed: "+currentGuess+"\n");
+        if(game.processGuess(currentGuess)){
+            QuestionArea.setBackground(cyan);
+            QuestionArea.append("Correct!\n");
+            QuestionArea.append(game.sendWord());
+        }
+        else{
+            QuestionArea.setBackground(red);
+            QuestionArea.append("Try again");
+        }
+        if(game.getWordListSize()==0){
+            QuestionArea.append("\nNo more words to review");
+            submitAnswerButton.setEnabled(false);
+            QuestionArea.setEnabled(false);
+        }
+    }
 
-    public void keyReleased(KeyEvent e){}
 
 
 }
