@@ -20,6 +20,10 @@ public class MainGUI extends JFrame implements ActionListener {
         game=gameRef;
         createUIComponents();
         setupListeners();
+        questionField.setEnabled(false);
+        answerField.setEnabled(false);
+        nextButton.setEnabled(false);
+        submitAnswerButton.setEnabled(false);
     }
 
     public void setupListeners(){
@@ -43,17 +47,22 @@ public class MainGUI extends JFrame implements ActionListener {
         String buttonText= clickedButton.getText();
         if(buttonText.equals("START")){
             game.play();
+            questionField.setEnabled(true);
+            answerField.setEnabled(true);
             questionField.setText(game.sendWord());
             StartButton.setVisible(false);
+            submitAnswerButton.setEnabled(true);
         }
         else if(buttonText.equals("Submit answer")){
             game.processGuess(buttonText);
             updateScreen();
         }
         else if(buttonText.equals("Next")){
+            nextButton.setEnabled(false);
             answerField.setBackground(white);
             questionField.setText(game.sendWord());
             answerField.setText("");
+            submitAnswerButton.setEnabled(true);
         }
 
     }
@@ -64,10 +73,11 @@ public class MainGUI extends JFrame implements ActionListener {
         if(game.processGuess(currentGuess)){
             answerField.setBackground(cyan);
             questionField.setText("Correct!\n");
+            submitAnswerButton.setEnabled(false);
+            nextButton.setEnabled(true);
         }
         else{
             answerField.setBackground(red);
-            questionField.setText("Try again! \n"+game.sendWord());
         }
         if(game.getWordListSize()==0){
             questionField.setText("\nNo more words to review");

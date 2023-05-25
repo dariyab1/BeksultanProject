@@ -7,6 +7,9 @@ public class QuizGame {
         wordList=new ArrayList<Quiz>();
         wordList.add(new Quiz("hola", "hello"));
         wordList.add(new Quiz("sombrero", "hat"));
+        wordList.add(new Quiz("limpiar","clean"));
+        wordList.add(new Quiz("tener", "to have"));
+
         q=null;
         gameWindow=new MainGUI(this);
     }
