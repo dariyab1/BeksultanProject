@@ -10,7 +10,9 @@ public class MainGUI extends JFrame implements ActionListener {
     private JLabel label1;
     private JTextField answerField;
     private JButton StartButton;
-    private JTextArea QuestionArea;
+    private JLabel wordLabel;
+    private JTextField questionField;
+    private JButton nextButton;
     private QuizGame game;
 
 
@@ -22,13 +24,14 @@ public class MainGUI extends JFrame implements ActionListener {
 
     public void setupListeners(){
         StartButton.addActionListener(this);
-        submitAnswerButton.addActionListener(this); //need to add action listener for submit answer button
+        submitAnswerButton.addActionListener(this);
+        nextButton.addActionListener(this);
     }
 
     public void createUIComponents(){
         setContentPane(MyJPanel);
         setTitle("My GUI");
-        setSize(500, 500);
+        setSize(500, 300);
         setLocation(450,100);
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         setVisible(true);
@@ -40,12 +43,17 @@ public class MainGUI extends JFrame implements ActionListener {
         String buttonText= clickedButton.getText();
         if(buttonText.equals("START")){
             game.play();
-            QuestionArea.append(game.sendWord());
+            questionField.setText(game.sendWord());
             StartButton.setVisible(false);
         }
         else if(buttonText.equals("Submit answer")){
             game.processGuess(buttonText);
             updateScreen();
+        }
+        else if(buttonText.equals("Next")){
+            answerField.setBackground(white);
+            questionField.setText(game.sendWord());
+            answerField.setText("");
         }
 
     }
@@ -53,20 +61,19 @@ public class MainGUI extends JFrame implements ActionListener {
 
     private void updateScreen(){
         String currentGuess = answerField.getText();
-        QuestionArea.append("\nYou have guessed: "+currentGuess+"\n");
         if(game.processGuess(currentGuess)){
-            QuestionArea.setBackground(cyan);
-            QuestionArea.append("Correct!\n");
-            QuestionArea.append(game.sendWord());
+            answerField.setBackground(cyan);
+            questionField.setText("Correct!\n");
         }
         else{
-            QuestionArea.setBackground(red);
-            QuestionArea.append("Try again");
+            answerField.setBackground(red);
+            questionField.setText("Try again! \n"+game.sendWord());
         }
         if(game.getWordListSize()==0){
-            QuestionArea.append("\nNo more words to review");
+            questionField.setText("\nNo more words to review");
+            nextButton.setEnabled(false);
             submitAnswerButton.setEnabled(false);
-            QuestionArea.setEnabled(false);
+            questionField.setEnabled(false);
         }
     }
 
