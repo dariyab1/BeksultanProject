@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 public class QuizGame {
+    private int index;
     private ArrayList<Quiz> wordList;
     private Quiz q;
     private MainGUI gameWindow;
@@ -9,28 +10,28 @@ public class QuizGame {
         wordList.add(new Quiz("sombrero", "hat"));
         wordList.add(new Quiz("limpiar","clean"));
         wordList.add(new Quiz("tener", "to have"));
+        index=0;
 
         q=null;
         gameWindow=new MainGUI(this);
     }
     public String sendWord(){
-        q=wordList.get(0);
+        q=wordList.get(index);
         return q.getWord();
     }
     public void play(){
-        if(wordList != null && wordList.size()>0){
-            q=wordList.get(0);
+        if(wordList != null && index<wordList.size()){
+            q=wordList.get(index);
         }
     }
     public String correctAnswer(){
-        return wordList.get(0).getAnswer();
+        return wordList.get(index).getAnswer();
     }
 
     public boolean processGuess(String guess){
         if(guess.equals(correctAnswer())){
-            wordList.remove(0);
-            if(wordList.size()>0){
-                q=wordList.get(0);
+            if(index<wordList.size()){
+                index++;
             }
             else{
                 q=new Quiz("","");
@@ -45,5 +46,12 @@ public class QuizGame {
     public int getWordListSize(){
         return wordList.size();
     }
+    public int getIndex(){return index;}
+    public void decreaseIndex(){
+        if(index-1>-1&&index+1<wordList.size()){
+            index--;
+        }
+    }
+
 
 }

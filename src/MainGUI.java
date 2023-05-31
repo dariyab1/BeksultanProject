@@ -13,6 +13,8 @@ public class MainGUI extends JFrame implements ActionListener {
     private JLabel wordLabel;
     private JTextField questionField;
     private JButton nextButton;
+    private JButton previousButton;
+    private JButton hintButton;
     private QuizGame game;
 
 
@@ -30,6 +32,7 @@ public class MainGUI extends JFrame implements ActionListener {
         StartButton.addActionListener(this);
         submitAnswerButton.addActionListener(this);
         nextButton.addActionListener(this);
+        previousButton.addActionListener(this);
     }
 
     public void createUIComponents(){
@@ -64,6 +67,11 @@ public class MainGUI extends JFrame implements ActionListener {
             answerField.setText("");
             submitAnswerButton.setEnabled(true);
         }
+        else if(buttonText.equals("Previous")){
+            game.decreaseIndex();
+            questionField.setText(game.sendWord());
+            answerField.setText(game.correctAnswer());
+        }
 
     }
 
@@ -79,7 +87,7 @@ public class MainGUI extends JFrame implements ActionListener {
         else{
             answerField.setBackground(red);
         }
-        if(game.getWordListSize()==0){
+        if(game.getIndex()==game.getWordListSize()){
             questionField.setText("\nNo more words to review");
             nextButton.setEnabled(false);
             submitAnswerButton.setEnabled(false);
