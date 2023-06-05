@@ -14,7 +14,6 @@ public class MainGUI extends JFrame implements ActionListener {
     private JTextField questionField;
     private JButton nextButton;
     private JButton previousButton;
-    private JButton hintButton;
     private QuizGame game;
 
 
@@ -57,20 +56,31 @@ public class MainGUI extends JFrame implements ActionListener {
             submitAnswerButton.setEnabled(true);
         }
         else if(buttonText.equals("Submit answer")){
-            game.processGuess(buttonText);
             updateScreen();
         }
         else if(buttonText.equals("Next")){
-            nextButton.setEnabled(false);
-            answerField.setBackground(white);
-            questionField.setText(game.sendWord());
-            answerField.setText("");
-            submitAnswerButton.setEnabled(true);
+            System.out.println(game.checkAnswered(1));
+            if(game.checkAnswered(1)){
+                game.increaseIndex();
+                questionField.setText(game.sendWord());
+                answerField.setText(game.correctAnswer());
+            }
+            else {
+                nextButton.setEnabled(false);
+                answerField.setBackground(white);
+                questionField.setText(game.sendWord());
+                answerField.setText("");
+                submitAnswerButton.setEnabled(true);
+            }
+
         }
         else if(buttonText.equals("Previous")){
+            System.out.println(game.checkAnswered(-1));
             game.decreaseIndex();
             questionField.setText(game.sendWord());
             answerField.setText(game.correctAnswer());
+            submitAnswerButton.setEnabled(false);
+            nextButton.setEnabled(true);
         }
 
     }
@@ -91,7 +101,6 @@ public class MainGUI extends JFrame implements ActionListener {
             questionField.setText("\nNo more words to review");
             nextButton.setEnabled(false);
             submitAnswerButton.setEnabled(false);
-            questionField.setEnabled(false);
         }
     }
 

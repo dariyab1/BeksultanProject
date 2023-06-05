@@ -1,10 +1,12 @@
 public class Quiz {
     private String word;
     private String answer;
+    private boolean answered;
 
-    public Quiz(String word, String answer){
+    public Quiz(String word, String answer, boolean answered){
         this.word=word;
         this.answer=answer;
+        this.answered=answered;
     }
 
     public String getWord(){
@@ -15,6 +17,12 @@ public class Quiz {
         return answer;
     }
 
+    public void setAnswered(){
+        answered=true;
+    }
 
+    public boolean getAnswered(){
+        return answered;
+    }
 
 }
