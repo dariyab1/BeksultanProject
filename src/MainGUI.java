@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -47,6 +48,11 @@ public class MainGUI extends JFrame implements ActionListener {
         Object source=e.getSource();
         JButton clickedButton=(JButton) source;
         String buttonText= clickedButton.getText();
+        if(game.getIndex()==game.getWordListSize()-1){
+            questionField.setText("\nNo more words to review");
+            nextButton.setEnabled(false);
+            submitAnswerButton.setEnabled(false);
+        }
         if(buttonText.equals("START")){
             game.play();
             questionField.setEnabled(true);
@@ -57,13 +63,13 @@ public class MainGUI extends JFrame implements ActionListener {
         }
         else if(buttonText.equals("Submit answer")){
             updateScreen();
+
         }
         else if(buttonText.equals("Next")){
-            System.out.println(game.checkAnswered(1));
-            if(game.checkAnswered(1)){
-                game.increaseIndex();
-                questionField.setText(game.sendWord());
-                answerField.setText(game.correctAnswer());
+
+            game.increaseIndex();
+            if(game.checkAnswered(0)){
+                showAnswer();
             }
             else {
                 nextButton.setEnabled(false);
@@ -72,11 +78,10 @@ public class MainGUI extends JFrame implements ActionListener {
                 answerField.setText("");
                 submitAnswerButton.setEnabled(true);
             }
-
         }
         else if(buttonText.equals("Previous")){
-            System.out.println(game.checkAnswered(-1));
             game.decreaseIndex();
+            System.out.println(game.checkAnswered(0));
             questionField.setText(game.sendWord());
             answerField.setText(game.correctAnswer());
             submitAnswerButton.setEnabled(false);
@@ -88,20 +93,24 @@ public class MainGUI extends JFrame implements ActionListener {
 
     private void updateScreen(){
         String currentGuess = answerField.getText();
+        Color myColor;
         if(game.processGuess(currentGuess)){
-            answerField.setBackground(cyan);
+            myColor = new Color (162, 232, 184);  //creates your new color
+            answerField.setBackground(myColor);
             questionField.setText("Correct!\n");
             submitAnswerButton.setEnabled(false);
             nextButton.setEnabled(true);
         }
         else{
-            answerField.setBackground(red);
+            myColor = new Color (252, 104, 104);
+            answerField.setBackground(pink);
         }
-        if(game.getIndex()==game.getWordListSize()){
-            questionField.setText("\nNo more words to review");
-            nextButton.setEnabled(false);
-            submitAnswerButton.setEnabled(false);
-        }
+
+    }
+
+    public void showAnswer(){
+        questionField.setText(game.sendWord());
+        answerField.setText(game.correctAnswer());
     }
 
 

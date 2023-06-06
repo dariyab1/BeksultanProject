@@ -33,6 +33,8 @@ public class QuizGame {
             q=wordList.get(index);
         }
     }
+
+
     public String correctAnswer(){
         return wordList.get(index).getAnswer();
     }
@@ -41,7 +43,6 @@ public class QuizGame {
         if(guess.equals(correctAnswer())){
             if(index<wordList.size()){
                 q.setAnswered();
-                index++;
             }
             else{
                 q=new Quiz("","", false);
@@ -63,7 +64,7 @@ public class QuizGame {
         }
     }
     public void increaseIndex(){
-        if(index>0&&index+1<wordList.size()){
+        if(index>-1&&index+1<wordList.size()){
             index++;
         }
     }
