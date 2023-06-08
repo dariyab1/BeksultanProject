@@ -4,16 +4,24 @@ public class QuizGame {
     private ArrayList<Quiz> wordList;
     private Quiz q;
     private MainGUI gameWindow;
+    private StartWindow start;
     public QuizGame(){
         wordList=new ArrayList<Quiz>();
-        wordList.add(new Quiz("hola", "hello", false));
-        wordList.add(new Quiz("sombrero", "hat", false));
-        wordList.add(new Quiz("limpiar","clean", false));
-        wordList.add(new Quiz("tener", "to have", false));
+        wordList.add(new Quiz("hola", "hello"));
+        wordList.add(new Quiz("sombrero", "hat"));
+        wordList.add(new Quiz("limpiar","clean"));
+        wordList.add(new Quiz("tener", "to have"));
         index=0;
 
         q=null;
-        gameWindow=new MainGUI(this);
+
+        start = new StartWindow(this);
+
+        //gameWindow=new MainGUI(this);
+    }
+
+    public void addWord(String word, String translation){
+        wordList.add(new Quiz(word, translation));
     }
 
     public String sendWord(){
@@ -45,7 +53,7 @@ public class QuizGame {
                 q.setAnswered();
             }
             else{
-                q=new Quiz("","", false);
+                q=new Quiz("","");
             }
             return true;
         }

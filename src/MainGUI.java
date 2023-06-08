@@ -19,6 +19,8 @@ public class MainGUI extends JFrame implements ActionListener {
 
 
     public MainGUI(QuizGame gameRef){
+        super();
+
         game=gameRef;
         createUIComponents();
         setupListeners();

@@ -3,10 +3,10 @@ public class Quiz {
     private String answer;
     private boolean answered;
 
-    public Quiz(String word, String answer, boolean answered){
+    public Quiz(String word, String answer){
         this.word=word;
         this.answer=answer;
-        this.answered=answered;
+        answered=false;
     }
 
     public String getWord(){
