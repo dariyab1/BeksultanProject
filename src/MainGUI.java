@@ -50,11 +50,6 @@ public class MainGUI extends JFrame implements ActionListener {
         Object source=e.getSource();
         JButton clickedButton=(JButton) source;
         String buttonText= clickedButton.getText();
-        if(game.getIndex()==game.getWordListSize()-1){
-            questionField.setText("\nNo more words to review");
-            nextButton.setEnabled(false);
-            submitAnswerButton.setEnabled(false);
-        }
         if(buttonText.equals("START")){
             game.play();
             questionField.setEnabled(true);
@@ -84,6 +79,7 @@ public class MainGUI extends JFrame implements ActionListener {
         else if(buttonText.equals("Previous")){
             game.decreaseIndex();
             System.out.println(game.checkAnswered(0));
+            System.out.println(game.getIndex());
             questionField.setText(game.sendWord());
             answerField.setText(game.correctAnswer());
             submitAnswerButton.setEnabled(false);
@@ -109,6 +105,8 @@ public class MainGUI extends JFrame implements ActionListener {
         }
 
     }
+
+
 
     public void showAnswer(){
         questionField.setText(game.sendWord());

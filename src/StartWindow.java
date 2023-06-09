@@ -42,6 +42,7 @@ public class StartWindow extends JFrame implements ActionListener{
             test=new MainGUI(game);
         }
         if(buttonText.equals("Make Your Own Quiz")){
+            game.clearList();
             setVisible(false);
             test2=new PersonalizedQuiz(game);
         }

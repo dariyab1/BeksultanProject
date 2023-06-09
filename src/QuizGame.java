@@ -20,6 +20,10 @@ public class QuizGame {
         //gameWindow=new MainGUI(this);
     }
 
+    public void clearList(){
+        wordList.clear();
+        index=0;
+    }
     public void addWord(String word, String translation){
         wordList.add(new Quiz(word, translation));
     }
@@ -69,11 +73,13 @@ public class QuizGame {
     public void decreaseIndex(){
         if(index>0&&index+1<wordList.size()){
             index--;
+            System.out.println("decreased");
         }
     }
     public void increaseIndex(){
         if(index>-1&&index+1<wordList.size()){
             index++;
+            System.out.println("increased");
         }
     }
 
